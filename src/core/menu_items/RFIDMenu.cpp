@@ -5,6 +5,8 @@
 #include "modules/rfid/PN532KillerTools.h"
 #include "modules/rfid/amiibo.h"
 #include "modules/rfid/chameleon.h"
+#include "modules/rfid/lf_rfid.h"
+#include "modules/rfid/nfc_bruteforce.h"
 #include "modules/rfid/pn532ble.h"
 #include "modules/rfid/rfid125.h"
 #include "modules/rfid/srix_tool.h" //added for srix Tool
@@ -20,6 +22,7 @@ void RFIDMenu::optionsMenu() {
 #ifndef LITE_VERSION
         {"Read EMV",    [=]() { EMVReader(); }                          },
         {"Read 125kHz", [=]() { RFID125(); }                            },
+        {"LF RFID",     lfRfidMenu                                      },
 #endif
         {"Scan tags",   [=]() { TagOMatic(TagOMatic::SCAN_MODE); }      },
         {"Load file",   [=]() { TagOMatic(TagOMatic::LOAD_MODE); }      },
@@ -27,6 +30,7 @@ void RFIDMenu::optionsMenu() {
         {"Write NDEF",  [=]() { TagOMatic(TagOMatic::WRITE_NDEF_MODE); }},
 #endif
 #ifndef LITE_VERSION
+        {"NFC Tools",   nfcEnhancedMenu                                 },
         {"Amiibolink",  [=]() { Amiibo(); }                             },
 #endif
         {"Chameleon",   [=]() { Chameleon(); }                          },

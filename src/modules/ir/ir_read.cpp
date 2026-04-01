@@ -8,6 +8,7 @@
  */
 
 #include "ir_read.h"
+#include "core/led_feedback.h"
 #include "core/display.h"
 #include "core/mykeyboard.h"
 #include "core/sd_functions.h"
@@ -58,6 +59,7 @@ IrRead::IrRead(bool headless_mode, bool raw_mode) {
 bool quickloop = false;
 
 void IrRead::setup() {
+    ledFeedbackSetMode(LED_FB_IR_ACTIVE);
     irrecv.enableIRIn();
 
 #ifdef USE_BOOST /// ENABLE 5V OUTPUT
@@ -140,6 +142,7 @@ void IrRead::loop() {
 
         read_signal();
     }
+    ledFeedbackRestore();
 }
 
 void IrRead::begin() {

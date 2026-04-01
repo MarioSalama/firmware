@@ -1,14 +1,21 @@
 #include "rf_scan.h"
 #include "core/led_control.h"
+#include "core/led_feedback.h"
 #include "core/sd_functions.h"
 #include "core/type_convertion.h"
 #include "rf_send.h"
 #include <globals.h>
 #include <sstream>
 
-RFScan::RFScan() { setup(); }
+RFScan::RFScan() {
+    ledFeedbackSetMode(LED_FB_RF_SCAN);
+    setup();
+}
 
-RFScan::~RFScan() { deinitRfModule(); }
+RFScan::~RFScan() {
+    ledFeedbackRestore();
+    deinitRfModule();
+}
 
 void RFScan::setup() {
     if (!initRfModule("rx", bruceConfigPins.rfFreq)) { return; }

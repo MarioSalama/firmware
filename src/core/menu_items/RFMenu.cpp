@@ -4,6 +4,7 @@
 #include "core/utils.h"
 #include "modules/rf/record.h"
 #include "modules/rf/rf_bruteforce.h"
+#include "modules/rf/rf_emulation.h"
 #include "modules/rf/rf_jammer.h"
 #include "modules/rf/rf_listen.h"
 #include "modules/rf/rf_scan.h"
@@ -15,18 +16,19 @@ void RFMenu::optionsMenu() {
     options = {
         {"Scan/copy",       [=]() { RFScan(); }       },
 #if !defined(LITE_VERSION)
-        {"Record RAW",      rf_raw_record             }, // Pablo-Ortiz-Lopez
+        {"Record RAW",      rf_raw_record             },
         {"Custom SubGhz",   sendCustomRF              },
 #endif
         {"Spectrum",        rf_spectrum               },
 #if !defined(LITE_VERSION)
-        {"RSSI Spectrum",   rf_CC1101_rssi            }, // @Pirata
-        {"SquareWave Spec", rf_SquareWave             }, // @Pirata
-        {"Spectogram",      rf_waterfall              }, // dev_eclipse
+        {"RSSI Spectrum",   rf_CC1101_rssi            },
+        {"SquareWave Spec", rf_SquareWave             },
+        {"Spectogram",      rf_waterfall              },
 #if defined(BUZZ_PIN) or defined(HAS_NS4168_SPKR) and defined(RF_LISTEN_H)
-        {"Listen",          rf_listen                 }, // dev_eclipse
+        {"Listen",          rf_listen                 },
 #endif
-        {"Bruteforce",      rf_bruteforce             }, // dev_eclipse
+        {"Bruteforce",      rf_bruteforce             },
+        {"Emulation",       rfEmulationMenu           },
         {"Jammer Itmt",     [=]() { RFJammer(false); }},
 #endif
         {"Jammer Full",     [=]() { RFJammer(true); } },

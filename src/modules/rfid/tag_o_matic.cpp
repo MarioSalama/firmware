@@ -7,6 +7,7 @@
  */
 
 #include "tag_o_matic.h"
+#include "core/led_feedback.h"
 #include "core/display.h"
 #include "core/mykeyboard.h"
 #include "esp_task_wdt.h" //Include for Headless mode (long write trigger watchdog in JS)
@@ -61,6 +62,7 @@ void TagOMatic::setup() {
         return;
     }
 
+    ledFeedbackSetMode(LED_FB_NFC_READ);
     set_state(_initial_state);
     return loop();
 }
@@ -89,6 +91,7 @@ void TagOMatic::loop() {
             case SAVE_MODE: save_file(); break;
         }
     }
+    ledFeedbackRestore();
 }
 
 void TagOMatic::select_state() {

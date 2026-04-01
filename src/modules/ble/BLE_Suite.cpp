@@ -1,6 +1,7 @@
 #if !defined(LITE_VERSION)
 #include "BLE_Suite.h"
 #include "HFP_Exploit.h"
+#include "core/led_feedback.h"
 #include "core/display.h"
 #include "core/mykeyboard.h"
 #include "core/utils.h"
@@ -135,6 +136,7 @@ bool BLEStateManager::initBLE(const String &name, int powerLevel) {
     std::string nameStr = name.c_str();
     NimBLEDevice::init(nameStr);
     NimBLEDevice::setPower((esp_power_level_t)powerLevel);
+    ledFeedbackSetMode(LED_FB_BLE_SCAN);
 
     currentDeviceName = name;
     bleInitialized = true;
@@ -143,6 +145,7 @@ bool BLEStateManager::initBLE(const String &name, int powerLevel) {
 
 void BLEStateManager::deinitBLE(bool immediate) {
     if (!bleInitialized) return;
+    ledFeedbackRestore();
     if (immediate) cleanupAllClients();
     NimBLEDevice::deinit(true);
     bleInitialized = false;

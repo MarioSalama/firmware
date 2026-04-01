@@ -1,6 +1,8 @@
 #include "core/main_menu.h"
 #include <globals.h>
 
+#include "core/boot_profiles.h"
+#include "core/encoder_gestures.h"
 #include "core/powerSave.h"
 #include "core/serial_commands/cli.h"
 #include "core/utils.h"
@@ -447,6 +449,7 @@ void setup() {
     begin_tft();
     init_clock();
     init_led();
+    encoderGesturesInit();
 
     options.reserve(20); // preallocate some options space to avoid fragmentation
 
@@ -501,8 +504,13 @@ void setup() {
     startSerialCommandsHandlerTask(true);
 
     wakeUpScreen();
-    if (bruceConfig.startupApp != "" && !startupApp.startApp(bruceConfig.startupApp)) {
-        bruceConfig.setStartupApp("");
+
+    // T-Embed CC1101: Check if user wants to boot into a specific profile
+    if (!checkBootProfileSelection()) {
+        // No profile selected, check for startup app
+        if (bruceConfig.startupApp != "" && !startupApp.startApp(bruceConfig.startupApp)) {
+            bruceConfig.setStartupApp("");
+        }
     }
 }
 

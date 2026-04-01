@@ -1,4 +1,5 @@
 #include "rf_bruteforce.h"
+#include "core/led_feedback.h"
 #include "rf_utils.h"
 
 static float brute_frequency = 433.92;
@@ -59,6 +60,7 @@ static bool rf_brute_start() {
 
     pinMode(txpin, OUTPUT);
     setMHZ(brute_frequency);
+    ledFeedbackSetMode(LED_FB_RF_BRUTEFORCE);
 
     for (int code = 0; code < total; ++code) {
         for (int r = 0; r < brute_repeats; ++r) {
@@ -85,6 +87,7 @@ static bool rf_brute_start() {
         if (check(EscPress)) break;
 
         if (code % 10 == 0) {
+            ledFeedbackShowProgress(code * 100 / total);
             displayRedStripe(
                 String(code) + "/" + String(total) + " " + proto.name,
                 getComplementaryColor2(bruceConfig.priColor),
@@ -93,6 +96,7 @@ static bool rf_brute_start() {
         }
     }
 
+    ledFeedbackRestore();
     digitalWrite(txpin, LOW);
     deinitRfModule();
     return true;

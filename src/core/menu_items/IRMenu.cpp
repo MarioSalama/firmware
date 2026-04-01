@@ -4,6 +4,7 @@
 #include "core/utils.h"
 #include "modules/ir/TV-B-Gone.h"
 #include "modules/ir/custom_ir.h"
+#include "modules/ir/ir_bruteforce.h"
 #include "modules/ir/ir_jammer.h"
 #include "modules/ir/ir_read.h"
 
@@ -13,13 +14,14 @@ void IRMenu::optionsMenu() {
     M5.Power.setExtOutput(true); // ENABLE 5V OUTPUT
 #endif
     options = {
-        {"TV-B-Gone", StartTvBGone              },
-        {"Custom IR", otherIRcodes              },
-        {"IR Read",   [=]() { IrRead(); }       },
+        {"TV-B-Gone",    StartTvBGone              },
+        {"Custom IR",    otherIRcodes              },
+        {"IR Read",      [=]() { IrRead(); }       },
 #if !defined(LITE_VERSION)
-        {"IR Jammer", startIrJammer             }, // Simple frequency-adjustable jammer
+        {"IR Jammer",    startIrJammer             },
+        {"IR BruteForce", irBruteForce             },
 #endif
-        {"Config",    [this]() { configMenu(); }},
+        {"Config",       [this]() { configMenu(); }},
     };
     addOptionToMainMenu();
 

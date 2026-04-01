@@ -4,6 +4,7 @@
 // https://github.com/justcallmekoko/ESP32Marauder/wiki/arduino-ide-setup But change the file in:
 // C:\Users\<YOur User>\AppData\Local\Arduino15\packages\m5stack\hardware\esp32\2.0.9
 #include "wifi_atks.h"
+#include "core/led_feedback.h"
 #include "core/display.h"
 #include "core/main_menu.h"
 #include "core/mykeyboard.h"
@@ -271,6 +272,7 @@ bool wifi_atk_unsetWifi() {
 ***************************************************************************************/
 void wifi_atk_menu() {
     resetGlobalState();
+    ledFeedbackSetMode(LED_FB_WIFI_ATTACK);
 
     if (WiFi.getMode() == WIFI_MODE_NULL) {
         wifi_complete_cleanup();
@@ -364,6 +366,7 @@ void wifi_atk_menu() {
         ap_records.clear();
         ap_records.shrink_to_fit();
     }
+    ledFeedbackRestore();
     wifi_atk_unsetWifi();
     checkHeap("Wifi menu end");
 }

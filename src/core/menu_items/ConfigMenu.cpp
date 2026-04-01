@@ -9,6 +9,8 @@
 #ifdef HAS_RGB_LED
 #include "core/led_control.h"
 #endif
+#include "core/battery_dashboard.h"
+#include "core/tembed_status_bar.h"
 
 /*********************************************************************
 **  Function: optionsMenu
@@ -31,6 +33,10 @@ void ConfigMenu::optionsMenu() {
             {"Audio Config",  [this]() { audioMenu(); }    },
             {"System Config", [this]() { systemMenu(); }   },
             {"Power",         [this]() { powerMenu(); }    },
+#ifdef T_EMBED_1101
+            {"Radio Dashboard", showRadioDashboard         },
+            {"Quick Settings",  showQuickSettings           },
+#endif
         };
 #if !defined(LITE_VERSION)
         if (!appStoreInstalled()) {
@@ -231,6 +237,9 @@ void ConfigMenu::advancedMenu() {
 void ConfigMenu::powerMenu() {
     while (true) {
         std::vector<Option> localOptions = {
+#ifdef USE_BQ27220_VIA_I2C
+            {"Battery Info", showBatteryDashboard  },
+#endif
             {"Deep Sleep", goToDeepSleep          },
             {"Sleep",      setSleepMode           },
             {"Restart",    []() { ESP.restart(); }},
