@@ -10,7 +10,9 @@
 #include "modules/others/qrcode_menu.h"
 #include "modules/others/tururururu.h"
 #include "modules/others/u2f.h"
-// Removed: #include "modules/others/timer.h"
+#if !defined(LITE_VERSION) && defined(USB_as_HID)
+#include "modules/others/badusb_advanced.h"
+#endif
 
 void OthersMenu::optionsMenu() {
     options = {
@@ -49,6 +51,10 @@ void OthersMenu::badUsbHidMenu() {
 #ifdef USB_as_HID
         {"USB Clicker",  clicker_setup                            },
         {"USB U2F",      u2f_setup                                },
+#endif
+
+#if !defined(LITE_VERSION) && defined(USB_as_HID)
+        {"Adv. Payloads",badusbAdvancedMenu                       },
 #endif
 
         {"Back",         [this]() { optionsMenu(); }              },

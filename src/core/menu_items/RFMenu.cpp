@@ -7,6 +7,7 @@
 #include "modules/rf/rf_emulation.h"
 #include "modules/rf/rf_jammer.h"
 #include "modules/rf/rf_listen.h"
+#include "modules/rf/rf_replay.h"
 #include "modules/rf/rf_scan.h"
 #include "modules/rf/rf_send.h"
 #include "modules/rf/rf_spectrum.h"
@@ -29,6 +30,7 @@ void RFMenu::optionsMenu() {
 #endif
         {"Bruteforce",      rf_bruteforce             },
         {"Emulation",       rfEmulationMenu           },
+        {"Replay/Attacks",  rfReplayMenu              },
         {"Jammer Itmt",     [=]() { RFJammer(false); }},
 #endif
         {"Jammer Full",     [=]() { RFJammer(true); } },

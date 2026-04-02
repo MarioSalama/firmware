@@ -7,6 +7,7 @@
 #include "modules/ble/ble_spam.h"
 #if !defined(LITE_VERSION)
 #include "modules/ble/BLE_Suite.h"
+#include "modules/ble/ble_exploitation.h"
 #endif
 #include <globals.h>
 
@@ -40,6 +41,7 @@ void BleMenu::optionsMenu() {
 
 #if !defined(LITE_VERSION)
     options.push_back({"BLE Suite", [=]() { BleSuiteMenu(); }});
+    options.push_back({"BLE Exploits", [=]() { bleExploitMenu(); }});
     options.push_back({"Ninebot", [=]() { BLENinebot(); }});
 #endif
     addOptionToMainMenu();
