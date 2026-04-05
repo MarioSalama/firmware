@@ -13,6 +13,7 @@
 #if !defined(LITE_VERSION) && defined(USB_as_HID)
 #include "modules/others/badusb_advanced.h"
 #endif
+#include "modules/others/dtmf_tools.h"
 
 void OthersMenu::optionsMenu() {
     options = {
@@ -21,6 +22,10 @@ void OthersMenu::optionsMenu() {
 
 #if defined(MIC_SPM1423) || defined(MIC_INMP441)
         {"Microphone",   [this]() { micMenu(); }      }, //@deveclipse
+#endif
+
+#if (defined(MIC_SPM1423) || defined(MIC_INMP441)) && (defined(HAS_NS4168_SPKR) || defined(BUZZ_PIN))
+        {"DTMF Tools",   dtmfToolsMenu                },
 #endif
 
 // New consolidated BadUSB & HID submenu
